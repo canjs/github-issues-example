@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>CanJS GitHub Issues To-Do List</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<script type="text/stache" id="github-template">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <github-issues {page-title}="pageTitle" />
+      </div>
+    </div>
+  </div>
+</script>
+
+<script type="text/stache" id="github-issues-template">
+  <h1 class="page-header text-center">
+    {{pageTitle}}
+  </h1>
+
+  <form ($submit)="send(%event, issuesPromise.value)">
+    <div class="form-group">
+      <label for="title" class="sr-only">Issue title</label>
+      <input class="form-control" id="title" placeholder="Issue title" type="text" {($value)}="title" />
+    </div>
+    <div class="form-group">
+      <label for="body" class="sr-only">Issue description</label>
+      <textarea class="form-control" id="body" placeholder="Issue description" {($value)}="body"></textarea>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit issue</button>
+  </form>
+
+  <div class="list-group">
+    {{#if issuesPromise.isPending}}
+      <div class="list-group-item list-group-item-info">
+        <h4>Loading…</h4>
+      </div>
+    {{/if}}
+    {{#if issuesPromise.isRejected}}
+      <div class="list-group-item list-group-item-danger">
+        <h4>Error</h4>
+        <p>{{issuesPromise.reason}}</p>
+      </div>
+    {{/if}}
+    {{#if issuesPromise.isResolved}}
+      {{#if issuesPromise.value.length}}
+        <ol class="list-unstyled" sortable>
+          {{#each issuesPromise.value}}
+            <li class="list-group-item" {{data 'issue'}}>
+              {{^is issuesPromise.value.length 1}}
+                <span class="glyphicon glyphicon-move grab-handle pull-right text-muted" aria-hidden="true"></span>
+              {{/is}}
+              <h4 class="list-group-item-heading">
+                {{title}} <span class="text-muted">#{{number}}</span>
+              </h4>
+              <p class="list-group-item-text text-overflow">
+                {{body}}
+              </p>
+            </li>
+          {{/each}}
+        </ol>
+      {{else}}
+        <div class="list-group-item list-group-item-info">
+      	  <h4>No issues</h4>
+        </div>
+      {{/if}}
+    {{/if}}
+  </div>
+</script>
+
+<script src="https://unpkg.com/jquery@3/dist/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="https://unpkg.com/can@3/dist/global/can.all.js"></script>
+<script src="/socket.io/socket.io.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
