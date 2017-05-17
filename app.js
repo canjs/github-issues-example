@@ -8,10 +8,11 @@ var Issue = can.DefineMap.extend({
 });
 
 Issue.List = can.DefineList.extend({
-  '*': Issue
+  '#': Issue
 });
 
 Issue.algebra = new can.set.Algebra(
+  can.set.props.id('id'),
   can.set.props.sort('sort')
 );
 
