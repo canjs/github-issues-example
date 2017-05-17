@@ -17,7 +17,7 @@ Issue.algebra = new can.set.Algebra(
 );
 
 Issue.connection = can.connect.superMap({
-  url: '/api/github/repos/chasenlehara/webhook-test/issues',// TODO: this will be updated to canjs/github-issues-example
+  url: '/api/github/repos/canjs/github-issues-example/issues',
   Map: Issue,
   List: Issue.List,
   name: 'issue',
@@ -63,12 +63,13 @@ can.view.callbacks.attr('sortable', function(element) {
 
 var GitHubIssuesVM = can.DefineMap.extend({
   issuesPromise: {
-      value: function(){
-          return Issue.getList({
-            sort: 'sort_position'
-          });
-      }
+    value: function(){
+        return Issue.getList({
+          sort: 'sort_position'
+        });
+    }
   },
+  pageTitle: 'string',
   title: 'string',
   body: 'string',
   send: function(event, issues) {
