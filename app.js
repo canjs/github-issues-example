@@ -72,7 +72,7 @@ var GitHubIssuesVM = can.DefineMap.extend('GitHubIssuesVM', {
   pageTitle: 'string',
   title: 'string',
   body: 'string',
-  send: function(event, issues) {
+  send: function(issues) {
     var firstIssue = (issues) ? issues[0] : null;
     var sortPosition = (firstIssue) ? (Number.MIN_SAFE_INTEGER + firstIssue.sort_position) / 2 : 0;
 

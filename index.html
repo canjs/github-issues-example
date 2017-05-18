@@ -23,7 +23,7 @@
     {{pageTitle}}
   </h1>
 
-  <form ($submit)="send(%event, issuesPromise.value)">
+  <form ($submit)="send(issuesPromise.value)">
     <div class="form-group">
       <label for="title" class="sr-only">Issue title</label>
       <input class="form-control" id="title" placeholder="Issue title" type="text" {($value)}="title" />
