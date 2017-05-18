@@ -49,7 +49,7 @@
     {{/if}}
     {{#if issuesPromise.isResolved}}
       {{#if issuesPromise.value.length}}
-        <ol class="list-unstyled" sortable>
+        <ol class="list-unstyled" sortable-issues>
           {{#each issuesPromise.value}}
             <li class="list-group-item" {{data 'issue'}}>
               {{^is issuesPromise.value.length 1}}

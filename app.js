@@ -1,4 +1,4 @@
-var Issue = can.DefineMap.extend({
+var Issue = can.DefineMap.extend('Issue', {
   seal: false
 }, {
   id: 'number',
@@ -7,7 +7,7 @@ var Issue = can.DefineMap.extend({
   body: 'string'
 });
 
-Issue.List = can.DefineList.extend({
+Issue.List = can.DefineList.extend('Issue.List', {
   '#': Issue
 });
 
@@ -35,7 +35,7 @@ socket.on('issue removed', function(issue) {
   Issue.connection.destroyInstance(issue);
 });
 
-can.view.callbacks.attr('sortable', function(element) {
+can.view.callbacks.attr('sortable-issues', function(element) {
   $(element).sortable({
     containment: 'parent',
     handle: '.grab-handle',
@@ -73,7 +73,6 @@ var GitHubIssuesVM = can.DefineMap.extend({
   title: 'string',
   body: 'string',
   send: function(event, issues) {
-    event.preventDefault();
     var firstIssue = (issues) ? issues[0] : null;
     var sortPosition = (firstIssue) ? (Number.MIN_SAFE_INTEGER + firstIssue.sort_position) / 2 : 0;
 
@@ -90,7 +89,12 @@ var GitHubIssuesVM = can.DefineMap.extend({
 can.Component.extend({
   tag: 'github-issues',
   view: can.stache.from('github-issues-template'),
-  ViewModel: GitHubIssuesVM
+  ViewModel: GitHubIssuesVM,
+  events: {
+    '{element} form submit': function(element, event) {
+      event.preventDefault();
+    }
+  }
 });
 
 var AppVM = can.DefineMap.extend({
@@ -101,6 +105,6 @@ var AppVM = can.DefineMap.extend({
 });
 
 var appVM = new AppVM();
-var template = can.stache.from('github-template');
+var template = can.stache.from('app-template');
 var frag = template(appVM);
 document.body.appendChild(frag);
