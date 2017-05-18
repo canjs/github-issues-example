@@ -61,7 +61,7 @@ can.view.callbacks.attr('sortable-issues', function(element) {
   });
 });
 
-var GitHubIssuesVM = can.DefineMap.extend({
+var GitHubIssuesVM = can.DefineMap.extend('GitHubIssuesVM', {
   issuesPromise: {
     value: function(){
         return Issue.getList({
@@ -97,7 +97,7 @@ can.Component.extend({
   }
 });
 
-var AppVM = can.DefineMap.extend({
+var AppVM = can.DefineMap.extend('AppVM', {
   pageTitle: {
     type: 'string',
     value: 'GitHub Issues',
