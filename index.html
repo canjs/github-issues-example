@@ -23,7 +23,7 @@
     {{pageTitle}}
   </h1>
 
-  <form ($submit)="send(issuesPromise.value)">
+  <form ($submit)="send()">
     <div class="form-group">
       <label for="title" class="sr-only">Issue title</label>
       <input class="form-control" id="title" placeholder="Issue title" type="text" {($value)}="title" />
@@ -48,11 +48,11 @@
       </div>
     {{/if}}
     {{#if issuesPromise.isResolved}}
-      {{#if issuesPromise.value.length}}
+      {{#if issues.length}}
         <ol class="list-unstyled" sortable-issues>
-          {{#each issuesPromise.value}}
+          {{#each issues}}
             <li class="list-group-item" {{data('issue', this)}}>
-              {{^is issuesPromise.value.length 1}}
+              {{^is issues.length 1}}
                 <span class="glyphicon glyphicon-move grab-handle pull-right text-muted" aria-hidden="true"></span>
               {{/is}}
               <h4 class="list-group-item-heading">

@@ -69,11 +69,19 @@ var GitHubIssuesVM = can.DefineMap.extend('GitHubIssuesVM', {
         });
     }
   },
+  issues: {
+    get: function(lastValue, setValue) {
+      if (lastValue) {
+        return lastValue;
+      }
+      this.issuesPromise.then(setValue);
+    }
+  },
   pageTitle: 'string',
   title: 'string',
   body: 'string',
-  send: function(issues) {
-    var firstIssue = (issues) ? issues[0] : null;
+  send: function() {
+    var firstIssue = (this.issues) ? this.issues[0] : null;
     var sortPosition = (firstIssue) ? (Number.MIN_SAFE_INTEGER + firstIssue.sort_position) / 2 : 0;
 
     new Issue({
