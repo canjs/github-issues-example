@@ -7,7 +7,7 @@ var Issue = can.DefineMap.extend('Issue', {
   body: 'string'
 });
 
-Issue.List = can.DefineList.extend('Issue.List', {
+Issue.List = can.DefineList.extend('IssueList', {
   '#': Issue
 });
 
@@ -28,11 +28,11 @@ var socket = io();
 socket.on('issue created', function(issue) {
   Issue.connection.createInstance(issue);
 });
-socket.on('issue updated', function(issue) {
-  Issue.connection.updateInstance(issue);
-});
 socket.on('issue removed', function(issue) {
   Issue.connection.destroyInstance(issue);
+});
+socket.on('issue updated', function(issue) {
+  Issue.connection.updateInstance(issue);
 });
 
 can.view.callbacks.attr('sortable-issues', function(element) {
@@ -50,11 +50,11 @@ can.view.callbacks.attr('sortable-issues', function(element) {
     },
     update: function(event, ui) {
       var draggedElement = ui.item[0];
-      var draggedIssue = (can.data.get.call(draggedElement, 'issue'))();
+      var draggedIssue = can.data.get.call(draggedElement, 'issue');
       var nextSibling = draggedElement.nextElementSibling;
       var previousSibling = draggedElement.previousElementSibling;
-      var nextIssue = (nextSibling) ? (can.data.get.call(nextSibling, 'issue'))() : {sort_position: Number.MAX_SAFE_INTEGER};
-      var previousIssue = (previousSibling) ? (can.data.get.call(previousSibling, 'issue'))() : {sort_position: Number.MIN_SAFE_INTEGER};
+      var nextIssue = (nextSibling) ? (can.data.get.call(nextSibling, 'issue')) : {sort_position: Number.MAX_SAFE_INTEGER};
+      var previousIssue = (previousSibling) ? (can.data.get.call(previousSibling, 'issue')) : {sort_position: Number.MIN_SAFE_INTEGER};
       draggedIssue.sort_position = (nextIssue.sort_position + previousIssue.sort_position) / 2;
       draggedIssue.save();
     }
