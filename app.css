@@ -1,0 +1,13 @@
+form {
+  margin: 1em 0 2em 0;
+}
+
+.list-group .drag-background {
+  background-color: #dff0d8;
+}
+
+.text-overflow {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
